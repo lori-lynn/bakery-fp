@@ -152,6 +152,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -176,6 +177,8 @@
     <Compile Include="Models\LoginHistory.cs">
       <DependentUpon>Bakery.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\NewPerson.cs" />
     <Compile Include="Models\Person.cs">
       <DependentUpon>Bakery.tt</DependentUpon>
     </Compile>
@@ -245,6 +248,8 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Shared\Result.cshtml" />
+    <Content Include="Views\Registration\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
