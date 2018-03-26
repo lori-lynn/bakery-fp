@@ -1,0 +1,74 @@
+﻿@model Bakery.Models.Sale
+
+@{
+    ViewBag.Title = "Receipt";
+}
+
+<h2>Receipt</h2>
+<div>
+    <table class="table">
+        <tr>
+            <td>Date: @Html.DisplayFor(model => model.SaleDate)</td>
+            <td>Employee: @Html.DisplayFor(model => model.Employee.Person.PersonFirstName) @Html.DisplayFor(model => model.Employee.Person.PersonLastName)</td>
+            <td>Customer: @Html.DisplayFor(model => model.Person.PersonFirstName) @Html.DisplayFor(model => model.Person.PersonLastName)</td>
+            <td>Sale Number: @Html.DisplayFor(model => model.SaleKey)</td>
+        </tr>
+    </table>
+    <table class="table">
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Discount</th>
+            <th>Sales Tax</th>
+            <th>Gratuity</th>
+        </tr>
+        @{
+        decimal subTotal = 0;
+        decimal salesTax = 0;
+        decimal gratuity = 0;
+        }
+        @foreach (var item in Model.SaleDetails)
+    {
+        <tr>
+            <td>@Html.DisplayFor(model => item.Product.ProductName)</td>
+            <td>@Html.DisplayFor(model => item.SaleDetailPriceCharged)</td>
+            <td>@Html.DisplayFor(model => item.SaleDetailQuantity)</td>
+            <td>@Html.DisplayFor(model => item.SaleDetailDiscount)</td>
+            <td>@Html.DisplayFor(model => item.SaleDetailSaleTaxPercent)</td>
+            <td>@Html.DisplayFor(model => item.SaleDetailEatInTax)</td>
+
+        </tr>
+                decimal linePrice = (item.SaleDetailPriceCharged * (decimal)item.SaleDetailQuantity) * (100 - item.SaleDetailDiscount.Value) / 100;
+                salesTax += linePrice * (item.SaleDetailSaleTaxPercent.Value / 100);
+                gratuity += linePrice * (item.SaleDetailEatInTax.Value / 100);
+                subTotal += linePrice;
+}
+        @{
+        decimal grandTotal = subTotal + salesTax + gratuity;
+        }
+
+    </table>
+        <table class="table bottom-right">
+            <tr>
+                <td>Subtotal</td>
+                <td>@Html.DisplayFor(model => subTotal)</td>
+            </tr>
+            <tr>
+                <td>Sales Tax</td>
+                <td>@Html.DisplayFor(model => salesTax)</td>
+            </tr>
+            <tr>
+                <td>Gratuity</td>
+                <td>@Html.DisplayFor(model => gratuity)</td>
+            </tr>
+            <tr>
+                <td>Grand Total</td>
+                <td>@Html.DisplayFor(model => grandTotal)</td>
+            </tr>
+        </table>
+    
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
